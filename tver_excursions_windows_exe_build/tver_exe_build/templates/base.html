@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Экскурсии по Твери: история, архитектура и прогулки по городу.">
+  <title>{% block title %}Тверь — городские экскурсии{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">Т</span><span>Тверь<span class="brand-light">.Гид</span></span></a>
+    <nav aria-label="Основная навигация">
+      <a href="{{ url_for('index') }}">Экскурсии</a>
+      <a href="{{ url_for('search') }}">Поиск</a>
+      {% if current_user %}
+        <a href="{{ url_for('favorites') }}">Избранное</a>
+        {% if current_user.role == 'admin' %}<a href="{{ url_for('admin') }}">Админ-панель</a>{% endif %}
+        <form class="nav-logout" method="post" action="{{ url_for('logout') }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="nav-link" type="submit">Выйти</button></form>
+      {% else %}
+        <a href="{{ url_for('login') }}">Войти</a><a class="nav-register" href="{{ url_for('register') }}">Регистрация</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="flash-wrap">{% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}</div>
+  {% block content %}{% endblock %}
+</main>
+<footer><div class="footer-inner"><div><a class="brand footer-brand" href="{{ url_for('index') }}">Тверь.Гид</a><p>Открывайте город вместе с нами</p></div><p>© 2026 Тверь.Гид · Учебный проект</p></div></footer>
+</body>
+</html>

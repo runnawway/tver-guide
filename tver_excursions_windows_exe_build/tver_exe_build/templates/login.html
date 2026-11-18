@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Вход — Тверь.Гид{% endblock %}{% block content %}
+<section class="form-page"><div class="form-aside"><div class="eyebrow">РАДЫ ВАС ВИДЕТЬ</div><h1>С возвращением<br>в Тверь.</h1><p>Войдите, чтобы сохранять понравившиеся маршруты и планировать прогулки.</p></div>
+<form class="auth-card" method="post" action="{{ url_for('login', next=request.args.get('next','')) }}"><div class="eyebrow">ЛИЧНЫЙ КАБИНЕТ</div><h2>Войти в аккаунт</h2><input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+<label for="email">Электронная почта</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="name@example.com">
+<label for="password">Пароль</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+<button class="btn btn-dark btn-full" type="submit">Войти</button><p class="form-foot">Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a></p></form></section>{% endblock %}
