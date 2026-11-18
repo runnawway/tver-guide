@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,16 +18,18 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd tver_excursions_windows_exe_build/tver_exe_build
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pyinstaller
 
       - name: Build EXE
         run: |
+          cd tver_excursions_windows_exe_build/tver_exe_build
           pyinstaller --noconfirm --clean --onefile --name TverGuide --add-data "templates;templates" --add-data "static;static" app.py
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: TverGuide-Windows
-          path: dist/TverGuide.exe
+          path: tver_excursions_windows_exe_build/tver_exe_build/dist/TverGuide.exe
